@@ -790,6 +790,10 @@ textarea.form-field {
     grid-template-columns: 1fr;
   }
 
+  .hero-panel {
+    grid-template-columns: 1fr;
+  }
+
   .site-wrapper {
     padding: 22px 16px 44px;
   }
@@ -828,6 +832,22 @@ textarea.form-field {
 
   .hero-photo {
     height: 220px;
+  }
+
+  .hero-card h3 {
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+
+  .hero-card p {
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  .hero-list-item {
+    align-items: flex-start;
+    font-size: 0.94rem;
+    line-height: 1.45;
   }
 
   .hero-actions {
@@ -891,6 +911,10 @@ textarea.form-field {
     margin-bottom: 14px;
     font-size: 1.85rem;
     line-height: 1.12;
+  }
+
+  .hero-card {
+    padding: 16px;
   }
 
   .hero p,
