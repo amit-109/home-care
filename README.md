@@ -28,3 +28,5 @@ VITE_LOCATIONIQ_API_KEY=your_actual_locationiq_key
 
 4. Save
 5. Redeploy the project
+
+Last updated: LocationIQ setup enabled.
