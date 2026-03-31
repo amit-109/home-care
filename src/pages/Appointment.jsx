@@ -1,13 +1,18 @@
 import { useState } from "react";
-import { FiCalendar, FiCheckCircle, FiClock, FiPhoneCall } from "react-icons/fi";
+import { FiCalendar, FiCheckCircle, FiClock, FiPhoneCall, FiSave, FiUserPlus } from "react-icons/fi";
 
 function Appointment() {
   const [form, setForm] = useState({
-    name: "",
+    fullName: "",
     phone: "",
-    service: "",
-    date: "",
-    time: "",
+    age: "",
+    gender: "Male",
+    address: "",
+    diagnosis: "",
+    serviceType: "Intravenous (IV)",
+    assignedNurse: "Sarah Mitchell",
+    status: "Active",
+    admissionDate: "",
     notes: ""
   });
 
@@ -17,8 +22,20 @@ function Appointment() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Appointment request submitted. We will contact you shortly.");
-    setForm({ name: "", phone: "", service: "", date: "", time: "", notes: "" });
+    alert("Patient registration submitted successfully.");
+    setForm({
+      fullName: "",
+      phone: "",
+      age: "",
+      gender: "Male",
+      address: "",
+      diagnosis: "",
+      serviceType: "Intravenous (IV)",
+      assignedNurse: "Sarah Mitchell",
+      status: "Active",
+      admissionDate: "",
+      notes: ""
+    });
   };
 
   return (
@@ -27,101 +44,210 @@ function Appointment() {
         <section className="page-hero fade-up">
           <div className="eyebrow" style={{ background: "#eef7ff", color: "#0069b4" }}>
             <FiCalendar className="icon" />
-            Book A Home Visit
+            Patient Registration
           </div>
-          <h1>Appointment flow redesigned for a cleaner healthcare booking experience</h1>
+          <h1>Patient registration and booking details</h1>
           <p>
-            This form now feels more like a professional service intake page, similar to the reference
-            site’s conversion-focused booking sections.
+            Add patient information clearly before assigning care services, nurse details, and
+            admission instructions.
           </p>
         </section>
 
         <section className="contact-grid">
           <article className="info-card fade-up">
-            <h3>Before you book</h3>
+            <h3>Before you submit</h3>
             <p>
-              Share the visit type, preferred date, and any recovery notes so the care team can prepare
-              the right professional and equipment.
+              Complete the patient profile carefully so nursing staff can prepare the right care plan,
+              service type, and onboarding details.
             </p>
 
             <div className="bullet-list">
               <div className="bullet-item">
                 <FiCheckCircle className="icon" />
-                <span><strong>Certified staff allocation</strong> based on the selected service.</span>
+                <span><strong>Patient identification</strong> with name, phone, age, and gender.</span>
               </div>
               <div className="bullet-item">
                 <FiClock className="icon" />
-                <span><strong>Preferred visit window</strong> for home procedures and diagnostics.</span>
+                <span><strong>Care assignment details</strong> like service type, status, and admission date.</span>
               </div>
               <div className="bullet-item">
                 <FiPhoneCall className="icon" />
-                <span><strong>Call confirmation</strong> to verify address and visit readiness.</span>
+                <span><strong>Condition notes</strong> to help the assigned nurse prepare properly.</span>
               </div>
             </div>
           </article>
 
-          <section className="form-card fade-up">
-            <h2 className="section-title">Schedule your appointment</h2>
-            <p className="section-subtitle">
-              Choose the service and your ideal timing. We will confirm the request after review.
-            </p>
+          <section className="form-card patient-form-card fade-up">
+            <div className="patient-form-header">
+              <div>
+                <h2 className="section-title">Add New Patient</h2>
+                <p className="section-subtitle">
+                  Enter the booking and care details in one clean registration form.
+                </p>
+              </div>
+              <div className="patient-form-badge">
+                <FiUserPlus className="icon" />
+                Registration
+              </div>
+            </div>
 
-            <form onSubmit={handleSubmit} className="form-grid">
-              <input
-                className="form-field"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Full name"
-                required
-              />
-              <input
-                className="form-field"
-                name="phone"
-                value={form.phone}
-                onChange={handleChange}
-                placeholder="Phone number"
-                required
-              />
-              <select
-                className="form-field"
-                name="service"
-                value={form.service}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select service</option>
-                <option value="Injection">Clinical Injection</option>
-                <option value="IV">Intravenous Therapy</option>
-                <option value="Physiotherapy">Physiotherapy</option>
-                <option value="ECG">ECG Monitoring</option>
-                <option value="Lab Test">Lab Testing</option>
-              </select>
-              <input
-                className="form-field"
-                name="date"
-                value={form.date}
-                onChange={handleChange}
-                type="date"
-                required
-              />
-              <input
-                className="form-field"
-                name="time"
-                value={form.time}
-                onChange={handleChange}
-                type="time"
-                required
-              />
-              <textarea
-                className="form-field full-span"
-                name="notes"
-                value={form.notes}
-                onChange={handleChange}
-                rows="5"
-                placeholder="Additional notes about patient condition, mobility, or equipment needs"
-              />
-              <button type="submit" className="btn full-span">Confirm Appointment</button>
+            <form onSubmit={handleSubmit} className="patient-form-layout">
+              <div className="form-section-title full-span">Basic Information</div>
+
+              <label className="field-group full-span">
+                <span className="field-label">Full Name *</span>
+                <input
+                  className="form-field material-field"
+                  name="fullName"
+                  value={form.fullName}
+                  onChange={handleChange}
+                  placeholder="John Doe"
+                  required
+                />
+              </label>
+
+              <label className="field-group full-span">
+                <span className="field-label">Phone Number</span>
+                <input
+                  className="form-field material-field"
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  placeholder="+91 98765 43210"
+                />
+              </label>
+
+              <label className="field-group">
+                <span className="field-label">Age *</span>
+                <input
+                  className="form-field material-field"
+                  name="age"
+                  value={form.age}
+                  onChange={handleChange}
+                  placeholder="65"
+                  required
+                />
+              </label>
+
+              <label className="field-group">
+                <span className="field-label">Gender</span>
+                <select
+                  className="form-field material-field"
+                  name="gender"
+                  value={form.gender}
+                  onChange={handleChange}
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </label>
+
+              <label className="field-group full-span">
+                <span className="field-label">Address</span>
+                <input
+                  className="form-field material-field"
+                  name="address"
+                  value={form.address}
+                  onChange={handleChange}
+                  placeholder="Search address..."
+                />
+              </label>
+
+              <div className="form-section-title full-span">Clinical Information</div>
+
+              <label className="field-group full-span">
+                <span className="field-label">Diagnosis / Condition *</span>
+                <input
+                  className="form-field material-field"
+                  name="diagnosis"
+                  value={form.diagnosis}
+                  onChange={handleChange}
+                  placeholder="e.g. Post-surgery recovery, Diabetes Type 2"
+                  required
+                />
+              </label>
+
+              <label className="field-group full-span">
+                <span className="field-label">Service Type</span>
+                <select
+                  className="form-field material-field"
+                  name="serviceType"
+                  value={form.serviceType}
+                  onChange={handleChange}
+                >
+                  <option value="Intravenous (IV)">Intravenous (IV)</option>
+                  <option value="Clinical Injection">Clinical Injection</option>
+                  <option value="ECG Monitoring">ECG Monitoring</option>
+                  <option value="Physiotherapy">Physiotherapy</option>
+                  <option value="Lab Testing">Lab Testing</option>
+                  <option value="X-Ray at Home">X-Ray at Home</option>
+                </select>
+              </label>
+
+              <div className="form-section-title full-span">Care Assignment</div>
+
+              <label className="field-group">
+                <span className="field-label">Assigned Nurse</span>
+                <select
+                  className="form-field material-field"
+                  name="assignedNurse"
+                  value={form.assignedNurse}
+                  onChange={handleChange}
+                >
+                  <option value="Sarah Mitchell">Sarah Mitchell</option>
+                  <option value="Anita Joseph">Anita Joseph</option>
+                  <option value="Rahul Varma">Rahul Varma</option>
+                  <option value="Priya Nair">Priya Nair</option>
+                </select>
+              </label>
+
+              <label className="field-group">
+                <span className="field-label">Status</span>
+                <select
+                  className="form-field material-field"
+                  name="status"
+                  value={form.status}
+                  onChange={handleChange}
+                >
+                  <option value="Active">Active</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </label>
+
+              <label className="field-group">
+                <span className="field-label">Admission Date</span>
+                <input
+                  className="form-field material-field"
+                  name="admissionDate"
+                  value={form.admissionDate}
+                  onChange={handleChange}
+                  type="date"
+                />
+              </label>
+
+              <div className="field-group field-group-empty" />
+
+              <label className="field-group full-span">
+                <span className="field-label">Notes & Messages</span>
+                <textarea
+                  className="form-field material-field"
+                  name="notes"
+                  value={form.notes}
+                  onChange={handleChange}
+                  rows="5"
+                  placeholder="Add notes, messages, or care instructions..."
+                />
+              </label>
+
+              <div className="patient-form-actions full-span">
+                <button type="button" className="text-btn">Cancel</button>
+                <button type="submit" className="btn">
+                  <FiSave className="icon" />
+                  Save Patient
+                </button>
+              </div>
             </form>
           </section>
         </section>

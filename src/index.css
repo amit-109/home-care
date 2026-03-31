@@ -572,6 +572,93 @@ img {
   gap: 14px;
 }
 
+.patient-form-card {
+  display: grid;
+  gap: 22px;
+}
+
+.patient-form-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.patient-form-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #eef7ff;
+  color: var(--brand);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.patient-form-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 16px;
+}
+
+.form-section-title {
+  padding-top: 4px;
+  color: var(--brand-deep);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field-group {
+  display: grid;
+  gap: 8px;
+}
+
+.field-group-empty {
+  min-height: 1px;
+}
+
+.field-label {
+  color: #385168;
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+
+.material-field {
+  border-radius: 14px;
+  border: 1px solid #d8e4ee;
+  background: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.material-field::placeholder {
+  color: #8aa0b4;
+}
+
+.patient-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+.text-btn {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 10px 12px;
+}
+
+.text-btn:hover {
+  color: var(--brand);
+}
+
 .form-field {
   width: 100%;
   border-radius: 16px;
@@ -794,6 +881,10 @@ textarea.form-field {
     grid-template-columns: 1fr;
   }
 
+  .patient-form-layout {
+    grid-template-columns: 1fr;
+  }
+
   .site-wrapper {
     padding: 22px 16px 44px;
   }
@@ -871,6 +962,15 @@ textarea.form-field {
 
   .contact-row {
     padding: 14px;
+  }
+
+  .patient-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .text-btn {
+    width: 100%;
   }
 }
 
@@ -969,6 +1069,15 @@ textarea.form-field {
     padding: 12px 14px;
     border-radius: 14px;
     font-size: 0.95rem;
+  }
+
+  .patient-form-header {
+    gap: 12px;
+  }
+
+  .patient-form-badge {
+    width: 100%;
+    justify-content: center;
   }
 
   .footer {
