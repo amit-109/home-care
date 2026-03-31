@@ -3,12 +3,20 @@ import { FiCalendar, FiCheckCircle, FiClock, FiKey, FiPhoneCall, FiSave, FiUserP
 
 function Appointment() {
   const createSimplePassword = () => `care${Math.floor(1000 + Math.random() * 9000)}`;
+  const supportedAreas = [
+    "Moolchand",
+    "Lajpat Nagar",
+    "Defence Colony",
+    "South Extension I",
+    "South Extension II"
+  ];
 
   const [form, setForm] = useState({
     fullName: "",
     phone: "",
     age: "",
     gender: "Male",
+    serviceArea: "Moolchand",
     address: "",
     diagnosis: "",
     serviceType: "Intravenous (IV)",
@@ -18,19 +26,29 @@ function Appointment() {
     password: createSimplePassword(),
     notes: ""
   });
+  const [locationError, setLocationError] = useState("");
 
   const handleChange = (e) => {
+    if (e.target.name === "serviceArea") {
+      setLocationError("");
+    }
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!supportedAreas.includes(form.serviceArea)) {
+      setLocationError("Service is not available in this location right now.");
+      return;
+    }
+
     alert("Patient registration submitted successfully.");
     setForm({
       fullName: "",
       phone: "",
       age: "",
       gender: "Male",
+      serviceArea: "Moolchand",
       address: "",
       diagnosis: "",
       serviceType: "Intravenous (IV)",
@@ -78,6 +96,10 @@ function Appointment() {
                 <FiPhoneCall className="icon" />
                 <span><strong>Condition notes</strong> to help the assigned nurse prepare properly.</span>
               </div>
+              <div className="bullet-item">
+                <FiCheckCircle className="icon" />
+                <span><strong>Delhi service areas only</strong> Moolchand, Lajpat Nagar, Defence Colony, South Extension I, and South Extension II.</span>
+              </div>
             </div>
           </article>
 
@@ -117,7 +139,7 @@ function Appointment() {
                   name="phone"
                   value={form.phone}
                   onChange={handleChange}
-                  placeholder="+91 98765 43210"
+                  placeholder="+91 8800193206"
                 />
               </label>
 
@@ -170,15 +192,39 @@ function Appointment() {
               </label>
 
               <label className="field-group full-span">
+                <span className="field-label">Service Area *</span>
+                <select
+                  className="form-field material-field"
+                  name="serviceArea"
+                  value={form.serviceArea}
+                  onChange={handleChange}
+                  required
+                >
+                  {supportedAreas.map((area) => (
+                    <option key={area} value={area}>{area}</option>
+                  ))}
+                  <option value="Other">Other Location</option>
+                </select>
+              </label>
+
+              <label className="field-group full-span">
                 <span className="field-label">Address</span>
                 <input
                   className="form-field material-field"
                   name="address"
                   value={form.address}
                   onChange={handleChange}
-                  placeholder="Search address..."
+                  placeholder="House number, street, landmark..."
                 />
               </label>
+
+              {locationError ? (
+                <div className="location-alert full-span">{locationError}</div>
+              ) : (
+                <div className="location-success full-span">
+                  Services are currently available only in: {supportedAreas.join(", ")}.
+                </div>
+              )}
 
               <div className="form-section-title full-span">Clinical Information</div>
 
@@ -214,14 +260,14 @@ function Appointment() {
               <div className="form-section-title full-span">Care Assignment</div>
 
               <label className="field-group">
-                <span className="field-label">Assigned Nurse</span>
+                <span className="field-label">Assigned Staff</span>
                 <select
                   className="form-field material-field"
                   name="assignedNurse"
                   value={form.assignedNurse}
                   onChange={handleChange}
                 >
-                  <option value="Sarah Mitchell">Sarah Mitchell</option>
+                  <option value="Sarah Mitchell">Rahul Kumar</option>
                   <option value="Anita Joseph">Anita Joseph</option>
                   <option value="Rahul Varma">Rahul Varma</option>
                   <option value="Priya Nair">Priya Nair</option>
