@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { FiCalendar, FiCheckCircle, FiClock, FiPhoneCall, FiSave, FiUserPlus } from "react-icons/fi";
+import { FiCalendar, FiCheckCircle, FiClock, FiKey, FiPhoneCall, FiSave, FiUserPlus } from "react-icons/fi";
 
 function Appointment() {
+  const createSimplePassword = () => `care${Math.floor(1000 + Math.random() * 9000)}`;
+
   const [form, setForm] = useState({
     fullName: "",
     phone: "",
@@ -13,6 +15,7 @@ function Appointment() {
     assignedNurse: "Sarah Mitchell",
     status: "Active",
     admissionDate: "",
+    password: createSimplePassword(),
     notes: ""
   });
 
@@ -34,6 +37,7 @@ function Appointment() {
       assignedNurse: "Sarah Mitchell",
       status: "Active",
       admissionDate: "",
+      password: createSimplePassword(),
       notes: ""
     });
   };
@@ -46,10 +50,10 @@ function Appointment() {
             <FiCalendar className="icon" />
             Patient Registration
           </div>
-          <h1>Patient registration and booking details</h1>
+          <h1>Patient registration details</h1>
           <p>
-            Add patient information clearly before assigning care services, nurse details, and
-            admission instructions.
+            Add patient information clearly before assigning care services, login access, nurse
+            details, and admission instructions.
           </p>
         </section>
 
@@ -82,7 +86,7 @@ function Appointment() {
               <div>
                 <h2 className="section-title">Add New Patient</h2>
                 <p className="section-subtitle">
-                  Enter the booking and care details in one clean registration form.
+                  Enter the patient and care details in one clean registration form.
                 </p>
               </div>
               <div className="patient-form-badge">
@@ -116,6 +120,28 @@ function Appointment() {
                   placeholder="+91 98765 43210"
                 />
               </label>
+
+              <div className="field-group full-span">
+                <span className="field-label">Password</span>
+                <div className="inline-field-action">
+                  <input
+                    className="form-field material-field"
+                    name="password"
+                    value={form.password}
+                    onChange={handleChange}
+                    placeholder="Generated password"
+                    readOnly
+                  />
+                  <button
+                    type="button"
+                    className="secondary-btn"
+                    onClick={() => setForm({ ...form, password: createSimplePassword() })}
+                  >
+                    <FiKey className="icon" />
+                    Generate
+                  </button>
+                </div>
+              </div>
 
               <label className="field-group">
                 <span className="field-label">Age *</span>

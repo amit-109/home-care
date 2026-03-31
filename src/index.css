@@ -627,6 +627,13 @@ img {
   font-weight: 700;
 }
 
+.inline-field-action {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
 .material-field {
   border-radius: 14px;
   border: 1px solid #d8e4ee;
@@ -657,6 +664,25 @@ img {
 
 .text-btn:hover {
   color: var(--brand);
+}
+
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  border-radius: 14px;
+  border: 1px solid #cfe0ee;
+  background: #f4f9fd;
+  color: var(--brand);
+  font-weight: 700;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.secondary-btn:hover {
+  background: #e8f4fd;
 }
 
 .form-field {
@@ -882,6 +908,10 @@ textarea.form-field {
   }
 
   .patient-form-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .inline-field-action {
     grid-template-columns: 1fr;
   }
 
