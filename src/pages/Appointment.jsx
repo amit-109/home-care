@@ -84,7 +84,7 @@ function Appointment() {
           <section className="form-card patient-form-card fade-up">
             <div className="patient-form-header">
               <div>
-                <h2 className="section-title">Add New Patient</h2>
+                <h2 className="section-title"> Appointment Form</h2>
                 <p className="section-subtitle">
                   Enter the patient and care details in one clean registration form.
                 </p>
