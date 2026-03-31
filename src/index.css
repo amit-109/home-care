@@ -29,6 +29,11 @@ body {
     radial-gradient(circle at top left, rgba(18, 167, 217, 0.12), transparent 32%),
     linear-gradient(180deg, #f9fcff 0%, var(--bg) 100%);
   color: var(--text);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
 }
 
 a {
@@ -103,6 +108,8 @@ img {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 .nav-link {
@@ -134,6 +141,7 @@ img {
   max-width: 1220px;
   margin: 0 auto;
   padding: 28px 24px 56px;
+  width: 100%;
 }
 
 .page-stack {
@@ -254,6 +262,7 @@ img {
 .hero-panel {
   display: grid;
   gap: 16px;
+  min-width: 0;
 }
 
 .hero-card {
@@ -262,6 +271,7 @@ img {
   border-radius: 22px;
   padding: 22px;
   backdrop-filter: blur(8px);
+  min-width: 0;
 }
 
 .hero-image-card {
@@ -301,6 +311,7 @@ img {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  max-width: 100%;
 }
 
 .hero-dots {
@@ -352,6 +363,7 @@ img {
   align-items: center;
   gap: 12px;
   font-weight: 600;
+  min-width: 0;
 }
 
 .stats-grid,
@@ -420,6 +432,7 @@ img {
 .info-card,
 .stat-card {
   padding: 24px;
+  min-width: 0;
 }
 
 .card h3,
@@ -598,6 +611,7 @@ textarea.form-field {
   border: 1px solid rgba(215, 227, 239, 0.85);
   border-radius: 20px;
   background: var(--surface);
+  min-width: 0;
 }
 
 .contact-row strong,
@@ -612,7 +626,7 @@ textarea.form-field {
 
 .image-circle {
   width: 100%;
-  height: 220px;
+  height: clamp(180px, 24vw, 220px);
   border-radius: 20px;
   object-fit: cover;
   background: linear-gradient(135deg, #edf7fc 0%, #dcecf8 100%);
@@ -673,11 +687,44 @@ textarea.form-field {
   text-align: center;
 }
 
+@media (max-width: 1180px) {
+  .navbar-inner {
+    padding: 14px 18px;
+  }
+
+  .site-wrapper {
+    padding: 24px 18px 52px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 42px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feature-grid,
+  .grid-3,
+  .about-grid,
+  .service-grid,
+  .trust-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 1000px) {
-  .hero,
   .split-banner,
   .contact-grid,
-  .stats-grid,
   .feature-grid,
   .grid-3,
   .about-grid,
@@ -686,20 +733,48 @@ textarea.form-field {
     grid-template-columns: 1fr 1fr;
   }
 
+  .navbar {
+    position: static;
+  }
+
+  .navbar-inner {
+    justify-content: center;
+  }
+
+  .brand-block {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+  }
+
   .hero {
-    padding: 36px;
+    padding: 36px 32px;
+  }
+
+  .hero h1,
+  .page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .page-hero,
+  .form-card {
+    padding: 32px 26px;
   }
 }
 
 @media (max-width: 760px) {
-  .navbar-inner,
-  .nav-links {
-    justify-content: center;
-  }
-
   .brand-block,
   .navbar-brand {
     text-align: center;
+  }
+
+  .nav-link,
+  .nav-cta {
+    min-height: 46px;
   }
 
   .hero,
@@ -722,13 +797,37 @@ textarea.form-field {
   .hero,
   .page-hero,
   .form-card {
-    padding: 24px;
+    padding: 24px 18px;
+    border-radius: 22px;
+  }
+
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+
+  .eyebrow {
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
   }
 
   .hero-image-overlay {
     inset: auto 18px 18px 18px;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .hero-image-badge {
+    font-size: 0.72rem;
+  }
+
+  .hero-dots {
+    justify-content: flex-start;
+  }
+
+  .hero-photo {
+    height: 220px;
   }
 
   .hero-actions {
@@ -739,5 +838,117 @@ textarea.form-field {
   .btn,
   .nav-cta {
     width: 100%;
+  }
+
+  .service-card,
+  .card,
+  .info-card,
+  .stat-card,
+  .trust-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .contact-row {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-inner {
+    padding: 12px 14px;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-title {
+    font-size: 0.98rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.72rem;
+  }
+
+  .site-wrapper {
+    padding: 18px 12px 36px;
+  }
+
+  .page-stack {
+    gap: 20px;
+  }
+
+  .hero,
+  .page-hero,
+  .form-card {
+    padding: 20px 14px;
+  }
+
+  .hero h1,
+  .page-hero h1 {
+    margin-bottom: 14px;
+    font-size: 1.85rem;
+    line-height: 1.12;
+  }
+
+  .hero p,
+  .page-hero p,
+  .section-subtitle,
+  .card p,
+  .service-card p,
+  .info-card p,
+  .trust-card p {
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .section-title {
+    font-size: 1.55rem;
+  }
+
+  .hero-photo {
+    height: 190px;
+    border-radius: 14px;
+  }
+
+  .hero-image-overlay {
+    inset: auto 14px 14px 14px;
+    gap: 10px;
+  }
+
+  .hero-dot {
+    width: 9px;
+    height: 9px;
+  }
+
+  .hero-dot.active {
+    width: 22px;
+  }
+
+  .service-icon,
+  .feature-icon,
+  .contact-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    font-size: 1.08rem;
+  }
+
+  .image-circle {
+    height: 170px;
+    border-radius: 16px;
+  }
+
+  .form-field {
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+  }
+
+  .footer {
+    padding: 0 12px 28px;
+    font-size: 0.9rem;
   }
 }
