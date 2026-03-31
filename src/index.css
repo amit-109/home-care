@@ -634,6 +634,64 @@ img {
   align-items: center;
 }
 
+.address-search-wrap {
+  position: relative;
+  display: grid;
+  gap: 10px;
+}
+
+.address-input-shell {
+  position: relative;
+}
+
+.address-input-icon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: #6f879b;
+}
+
+.address-input {
+  padding-left: 42px;
+}
+
+.address-search-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid #d8e4ee;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 16px 36px rgba(11, 49, 84, 0.12);
+}
+
+.suggestion-item {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  background: #f7fbfe;
+  color: var(--text);
+  cursor: pointer;
+  padding: 12px 14px;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.suggestion-item:hover {
+  background: #edf7ff;
+}
+
 .material-field {
   border-radius: 14px;
   border: 1px solid #d8e4ee;

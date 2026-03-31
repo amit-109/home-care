@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { FiCalendar, FiCheckCircle, FiClock, FiKey, FiPhoneCall, FiSave, FiUserPlus } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { FiCalendar, FiCheckCircle, FiClock, FiKey, FiMapPin, FiPhoneCall, FiSave, FiUserPlus } from "react-icons/fi";
 
 function Appointment() {
   const createSimplePassword = () => `care${Math.floor(1000 + Math.random() * 9000)}`;
+  const locationIqApiKey = import.meta.env.VITE_LOCATIONIQ_API_KEY;
   const supportedAreas = [
     "Moolchand",
     "Lajpat Nagar",
@@ -26,19 +27,77 @@ function Appointment() {
     password: createSimplePassword(),
     notes: ""
   });
+  const [addressSuggestions, setAddressSuggestions] = useState([]);
+  const [isSearchingAddress, setIsSearchingAddress] = useState(false);
   const [locationError, setLocationError] = useState("");
+
+  useEffect(() => {
+    const query = form.address.trim();
+
+    if (!locationIqApiKey || query.length < 3) {
+      setAddressSuggestions([]);
+      setIsSearchingAddress(false);
+      return;
+    }
+
+    const timer = window.setTimeout(async () => {
+      try {
+        setIsSearchingAddress(true);
+        const response = await fetch(
+          `https://us1.locationiq.com/v1/search?key=${locationIqApiKey}&q=${encodeURIComponent(query)}&format=json&countrycodes=in&limit=5`
+        );
+
+        if (!response.ok) {
+          throw new Error("Unable to fetch address suggestions.");
+        }
+
+        const data = await response.json();
+        setAddressSuggestions(Array.isArray(data) ? data : []);
+      } catch (error) {
+        setAddressSuggestions([]);
+      } finally {
+        setIsSearchingAddress(false);
+      }
+    }, 400);
+
+    return () => window.clearTimeout(timer);
+  }, [form.address, locationIqApiKey]);
+
+  const checkServiceAvailability = (addressText) => {
+    const normalizedAddress = addressText.toLowerCase();
+    const matchedArea = supportedAreas.find((area) => normalizedAddress.includes(area.toLowerCase()));
+
+    if (matchedArea) {
+      setLocationError("");
+      setForm((current) => ({ ...current, serviceArea: matchedArea }));
+      return true;
+    }
+
+    setLocationError("Service is not available in this location right now.");
+    return false;
+  };
 
   const handleChange = (e) => {
     if (e.target.name === "serviceArea") {
       setLocationError("");
     }
+
+    if (e.target.name === "address") {
+      setForm({ ...form, address: e.target.value });
+      if (e.target.value.trim().length >= 3) {
+        checkServiceAvailability(e.target.value);
+      } else {
+        setLocationError("");
+      }
+      return;
+    }
+
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!supportedAreas.includes(form.serviceArea)) {
-      setLocationError("Service is not available in this location right now.");
+    if (!checkServiceAvailability(form.address || form.serviceArea)) {
       return;
     }
 
@@ -58,6 +117,8 @@ function Appointment() {
       password: createSimplePassword(),
       notes: ""
     });
+    setAddressSuggestions([]);
+    setLocationError("");
   };
 
   return (
@@ -209,13 +270,49 @@ function Appointment() {
 
               <label className="field-group full-span">
                 <span className="field-label">Address</span>
-                <input
-                  className="form-field material-field"
-                  name="address"
-                  value={form.address}
-                  onChange={handleChange}
-                  placeholder="House number, street, landmark..."
-                />
+                <div className="address-search-wrap">
+                  <div className="address-input-shell">
+                    <FiMapPin className="icon address-input-icon" />
+                    <input
+                      className="form-field material-field address-input"
+                      name="address"
+                      value={form.address}
+                      onChange={handleChange}
+                      placeholder="Type patient address..."
+                    />
+                  </div>
+
+                  {locationIqApiKey ? (
+                    <>
+                      {isSearchingAddress ? (
+                        <div className="address-search-note">Checking address availability...</div>
+                      ) : null}
+
+                      {addressSuggestions.length > 0 ? (
+                        <div className="suggestions-list">
+                          {addressSuggestions.map((item) => (
+                            <button
+                              key={item.place_id}
+                              type="button"
+                              className="suggestion-item"
+                              onClick={() => {
+                                setForm({ ...form, address: item.display_name });
+                                setAddressSuggestions([]);
+                                checkServiceAvailability(item.display_name);
+                              }}
+                            >
+                              {item.display_name}
+                            </button>
+                          ))}
+                        </div>
+                      ) : null}
+                    </>
+                  ) : (
+                    <div className="address-search-note">
+                      Add `VITE_LOCATIONIQ_API_KEY` to your Vite environment to enable live address search.
+                    </div>
+                  )}
+                </div>
               </label>
 
               {locationError ? (
